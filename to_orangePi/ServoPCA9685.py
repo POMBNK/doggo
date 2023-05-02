@@ -1,17 +1,17 @@
 import time
 # Servo with PCA9685 implementation
 
-# Configure min and max servo pulse lengths
-
 def map(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min + 1) / (in_max - in_min + 1) + out_min
 
 class ServoPCA9685(object):
-    def __init__(self, pca9685, channel,servo_min=103,servo_max=512):
+    def __init__(self, pca9685, channel, servo_pwm = [103,512], servo_dgr = [0,180]):
         self.pca9685 = pca9685
         self.channel = channel
-        self.servo_min = servo_min
-        self.servo_max = servo_max
+        self.servo_min_pwm = servo_pwm[0]
+        self.servo_max_pwm = servo_pwm[1]
+        self.servo_min_dgr = servo_dgr[0]
+        self.servo_max_dgr = servo_dgr[1]
         self.set_pwm_freq(50)
         self.set_pulse(300)
 
@@ -20,7 +20,7 @@ class ServoPCA9685(object):
         time.sleep(0.005)
 
     def set_angle(self, angle):
-        self.set_pulse(map(angle, 0, 180, self.servo_min, self.servo_max))
+        self.set_pulse(map(angle, self.servo_min_dgr, self.servo_max_dgr, self.servo_min, self.servo_max))
 
     def set_pulse(self, pulse):
         if pulse >= self.servo_min and pulse <= self.servo_max:

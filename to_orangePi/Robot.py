@@ -2,6 +2,7 @@
     #COMMENT THIS IN REAL ORANGE PI ENV 
 import sys
 import fake_rpi
+import json
 
 sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi
 sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO # Fake GPIO
@@ -33,14 +34,15 @@ class Robot(object):
         self.l1=100
         self.l2=100
         #servos init once
-        self.servo_knee_r_f = ServoPCA9685.ServoPCA9685(self.pca9685, PCA9685.CHANNEL10,103,512)
-        self.servo_hip_r_f = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL11,103,512)
-        self.servo_knee_l_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL06,103,512)
-        self.servo_hip_l_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL07,103,512)
-        self.servo_knee_l_f = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL14,103,512)
-        self.servo_hip_l_f = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL15,103,512)
-        self.servo_knee_r_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL02,103,512)
-        self.servo_hip_r_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL03,103,512)
+        srv_data = json.load('servo_pwm_dgr.json')
+        self.servo_knee_r_f = ServoPCA9685.ServoPCA9685(self.pca9685, PCA9685.CHANNEL10, srv_data['krf']['pwm'], srv_data['krf']['dgr'])
+        self.servo_hip_r_f = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL11, srv_data['hrf']['pwm'], srv_data['hrf']['dgr'])
+        self.servo_knee_l_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL06, srv_data['klb']['pwm'], srv_data['klb']['dgr'])
+        self.servo_hip_l_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL07, srv_data['hlb']['pwm'], srv_data['hlb']['dgr'])
+        self.servo_knee_l_f = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL14, srv_data['klf']['pwm'], srv_data['klf']['dgr'])
+        self.servo_hip_l_f = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL15, srv_data['hlf']['pwm'], srv_data['hlf']['dgr'])
+        self.servo_knee_r_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL02, srv_data['krb']['pwm'], srv_data['krb']['dgr'])
+        self.servo_hip_r_b = ServoPCA9685.ServoPCA9685 (self.pca9685, PCA9685.CHANNEL03, srv_data['hrb']['pwm'], srv_data['hrb']['dgr'])
 
     # callculate_step return a servos angle to hip and knee from IK step pos
     def callculate_step(self,x_range_step):
