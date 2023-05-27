@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<head>
+			<link rel="stylesheet" href="/static/style.css"/>
+		</head>
+		<title>Robot control</title>
+		<script src="static/js/ajax.js"></script> 
+		<script src="static/js/main.js"></script>
+	</head>
+	
+	<body>
+		<div class="container", var = {{state}}>
+			<center><button class="forward" type="button" aria-pressed="false" onload="start()">↑</button><br/></center>
+			<button class="left" type="button" aria-pressed="false" onload="start()">←</button>
+			<button class="idle" type="button" aria-pressed="false" onload="start()">x</button>
+			<button class="right" type="button" aria-pressed="false" onload="start()">→</button><br/>
+			<center><button class="backward" type="button" aria-pressed="false" onload="start()">↓</button></center>
+		</div>  
+	</body>
+	
+</html>

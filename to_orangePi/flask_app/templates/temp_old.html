@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <style>
+    body {
+      text-align: center;
+      font-family: "Trebuchet MS", Arial;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .slider {
+      width: 300px;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Merk huesos</h1>
+  <p>Position: <span id="servoPos"></span></p>
+  <input type="range" min="0" max="100" class="slider" id="servoSlider" onchange="servo(this.value)"/>
+  <script>
+    var slider = document.getElementById("servoSlider");
+    var servoP = document.getElementById("servoPos");
+    servoP.innerHTML = slider.value;
+    slider.oninput = function() {
+      slider.value = this.value;
+      servoP.innerHTML = this.value;
+    }
+    $.ajaxSetup({timeout:1000});
+    function servo(pos) {
+      $.get("/height?value=" + pos);
+      {Connection: close};
+    }
+  </script>
+  <br></br>
+  <img src="https://cdn.vox-cdn.com/thumbor/J7Xvs7HnZUCEv-Sv747hOgq-BEw=/0x0:600x322/600x322/filters:focal(300x161:301x162):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22437703/spot_pee_beer.gif" alt="this slowpoke moves"  width="1000" />  
+</body>
+</html>
